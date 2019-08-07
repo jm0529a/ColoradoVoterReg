@@ -10,28 +10,34 @@
     position: absolute;			
     text-align: center;			
     width: 200px;					
-    height: 150px;					
-    padding: 2px;				
+    height: 140px;					
+    padding: 3px;				
     font: 12px sans-serif;		
-    background: white;	
+    background: #F0F0EC;	
     border: 0px;		
     border-radius: 8px;			
-    pointer-events: none;			
+    pointer-events: none;
+   	box-shadow: 3px 3px 3px gray;
+}
+
+path:hover {
+	fill-opacity:.6;
 }
 
 </style>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <head>
-	<body>http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
+	<body>
 	
 	<div id="map" style="display: inline-block">
-		<script type="text/javascript">
+		<script type="text/javascript" >
 
 			var width = 600;
 			var height = 500;
 			var cellpadding = 20;
 
-			d3.json("ColoPleth8619.geojson")
+
+			d3.json("ColoPleth87.geojson")
 			.then(function(data){
 
 			var counties = data;
@@ -53,7 +59,7 @@
 				.scale(4000)
 				.translate([width/2, height/2])
 
-				console.log(data.features)
+				console.log(data)
 
 			
 
@@ -84,7 +90,7 @@
 				.attr("class", "tooltip")
 				.style("opacity", 0);
 
-
+		
 			svg.selectAll("path")
 				.data(data.features)
 				.enter()
@@ -127,11 +133,15 @@
 				})
 				.style("stroke", "white")
 				.style("stroke-width", "1px")
+				.attr("class", function(d){
+					return "county" +d.properties.county
+				})
 				.on("mouseover", function(d){
 					div.transition()
 						.duration(200)
 						.style("opacity", 1);
-					div .html(d.properties.county + "County" + d.properties.Margin) 
+					div .html("<strong> <font size=3>" + d.properties.county + " " + "County" + "</strong></font>" + "<br></br>" +  "<table style='width:100%' cellpadding=2><tr>" + "<th>" + "Party" + "</th>" + "<th>" + "Reg. Voters" + "</th>" + "<th>" + "Pct." + "</th></tr>" + "<tr><td align=left>" + "Democratic" + "</td>" + "<td>" + d.properties.DemVoters + "</td>" + "<td>" + d.properties.DemPct + "%" + "</td></tr>" + "<tr><td align=left>" + "Republican" + "</td>" + "<td>" + d.properties.GOPVoter + "</td>" + "<td>" + d.properties.RepPct + "%" + "</td></tr>" + "<tr><td align=left>" + "Unaffiliated" + "</td>" + "<td>" + d.properties.IndVoters + "</td>" + "<td>" + d.properties.IndPct + "%" + "</table>" + "<hr>" + "<align=left><font size=1>" + "Totals as of July 2019" + "</align></font>"
+					)
 						.style("left", (d3.event.pageX) + "px")		
                 		.style("top", (d3.event.pageY - 28) + "px");	
 				})
@@ -222,12 +232,6 @@
 				.text(function(d){
 					return "Grand Junction"
 				})
-
-
-
-
-
-
 
 
 			})

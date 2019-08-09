@@ -3,7 +3,38 @@
 <style type="text/css">
 	body {
 		float: left;
-		padding-top: 50px;
+		height: 100%;
+		
+		/*padding-top: 50px;*/
+
+		
+
+	}
+
+	.svg-container {
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		padding-bottom: 0%;
+		vertical-align: top;
+		overflow: hidden;
+	}
+
+	/*.svg-container > svg {
+		display: inline-block;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+
+	}*/
+
+	.svg-content {
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 
 	div.tooltip {	
@@ -30,8 +61,15 @@ path:hover {
 	<body>
 
 	
-	<div id="map" style="display: inline-block">
+	<div id="container" class="svg-container">
 		<script type="text/javascript" >
+
+					
+
+			window.addEventListener('resize', function(){
+					console.log("the windoes was resized!");
+				})
+
 
 			var width = 500;
 			var height = 400;
@@ -50,10 +88,12 @@ path:hover {
 			// 	.domain([0,51])
 
 
-			var svg = d3.select("div")
+			var svg = d3.select("div#container")
 				.append("svg")
-				.attr("width", width)
-				.attr("height", height)
+				.attr("preserveAspectRatio", "xMinYMin meet")
+				.attr("viewBox", "0 0 500 400")
+				// .classed("svg-content", true)
+				
 
 			var counties = d3.map();
 			var projection = d3.geoMercator()
@@ -62,6 +102,8 @@ path:hover {
 				.translate([width/2, height/2])
 
 				console.log(data)
+
+
 
 			
 
@@ -92,7 +134,7 @@ path:hover {
 				.attr("class", "tooltip")
 				.style("opacity", 0);
 
-			d3.select(self.frameElement).style("height", "1000px");
+			// d3.select(self.frameElement).style("height", "1000px");
 
 		
 			svg.selectAll("path")
@@ -237,14 +279,20 @@ path:hover {
 					return "Grand Junction"
 				})
 
+				
+
 	
 			})
 
+
+
 		</script>
+	
 
 	</div>
 	<div id="legend">
-	<img src="VoterRegLegends.png" height=64px width=495x></img>
+
+	<img class="svg-container" src="VoterRegLegends.png"></img>
 </div>
 </body>
 </head>

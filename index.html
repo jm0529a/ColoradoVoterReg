@@ -22,6 +22,22 @@
 		overflow: hidden;
 	}
 
+	#bighead {
+		margin-bottom: -15px;
+		font-size: 26px;
+
+	}
+
+	.head {
+		font-family: Bahnschrift;
+		
+	}
+	#subhead {
+		margin-bottom: -35px;
+		font-weight: normal;
+		letter-spacing: -.5px;
+	}
+
 	/*.svg-container > svg {
 		display: inline-block;
 		position: absolute;
@@ -61,9 +77,13 @@ path:hover {
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <head>
 	<body>
+<!-- <h1>Republican registered voters have a plurality in the most counties while independents </h1> -->
+<h2 class="head" id="bighead">Colorado voter affiliation by county</h2>
+<h3 class="head" id="subhead">La Plata County is a microcosm of the state as unaffiliated voters have a sizeable plurality while Democrats edge out Republicans.</h3>
 
 	
 	<div id="container" class="svg-container">
+
 		<script type="text/javascript" >
 
 					
@@ -94,14 +114,20 @@ path:hover {
 				.append("svg")
 				.attr("preserveAspectRatio", "xMinYMin meet")
 				.attr("viewBox", "0 0 500 400")
+				.attr("transform", "rotate(354 0 0)")
 				// .classed("svg-content", true)
 				
 
 			var counties = d3.map();
-			var projection = d3.geoMercator()
-				.center([-105.5128, 39.0489])
-				.scale(4000)
-				.translate([width/2, height/2])
+			var projection = d3.geoAlbersUsa() 
+				// .center([-105.5128, 39.0489])
+				// .scale(2000)
+				// .translate([width/2, height/2])
+				
+				.scale(4700)
+				.translate([width/.615, height/1.5])
+				// .parallels([-35,40])
+
 
 				console.log(data)
 
@@ -188,7 +214,7 @@ path:hover {
 					div.transition()
 						.duration(200)
 						.style("opacity", 1);
-					div .html("<strong> <font size=3>" + d.properties.county + " " + "County" + "</strong></font>" + "<br></br>" +  "<table style='width:100%' cellpadding=2><tr>" + "<th>" + "Party" + "</th>" + "<th>" + "Reg. Voters" + "</th>" + "<th>" + "Pct." + "</th></tr>" + "<tr><td align=left>" + "Democratic" + "</td>" + "<td>" + d.properties.DemVoters + "</td>" + "<td>" + d.properties.DemPct + "%" + "</td></tr>" + "<tr><td align=left>" + "Republican" + "</td>" + "<td>" + d.properties.GOPVoter + "</td>" + "<td>" + d.properties.RepPct + "%" + "</td></tr>" + "<tr><td align=left>" + "Unaffiliated" + "</td>" + "<td>" + d.properties.IndVoters + "</td>" + "<td>" + d.properties.IndPct + "%" + "</table>" + "<hr>" + "<align=left><font size=1>" + "Totals as of July 2019" + "</align></font>"
+					div .html("<strong> <font size=3>" + d.properties.county + " " + "County" + "</strong></font>" + "<br></br>" +  "<table style='width:100%' cellpadding=2><tr>" + "<th>" + "Party" + "</th>" + "<th>" + "Reg. Voters" + "</th>" + "<th>" + "Pct." + "</th></tr>" + "<tr><td align=left>" + "Democratic" + "</td>" + "<td>" + d.properties.DemVoters + "</td>" + "<td>" + d.properties.DemPct + "%" + "</td></tr>" + "<tr><td align=left>" + "Republican" + "</td>" + "<td>" + d.properties.GOPVoter + "</td>" + "<td>" + d.properties.RepPct + "%" + "</td></tr>" + "<tr><td align=left>" + "Unaffiliated" + "</td>" + "<td>" + d.properties.IndVoters + "</td>" + "<td>" + d.properties.IndPct + "%" + "</table>" + "<hr>" + "<align=left><font size=1>" + "Totals as of July 1, 2019" + "</align></font>"
 					)
 						.style("left", (d3.event.pageX) + "px")		
                 		.style("top", (d3.event.pageY - 28) + "px");	
@@ -232,6 +258,7 @@ path:hover {
 				.text(function(d){
 					return "Durango"
 			})
+				.attr("transform", "translate (43 -12) rotate(6)") 
 				.exit()
 				.data([gg,hh]).enter()
 				.append("text")
@@ -248,6 +275,7 @@ path:hover {
 				.text(function(d){
 					return "Denver"
 				})
+				.attr("transform", "translate (22 -32) rotate(6)") 
 				.exit()
 				.data([kk,ll]).enter()
 				.append("text")
@@ -264,6 +292,7 @@ path:hover {
 				.text(function(d){
 					return "Colorado Springs"
 				})
+				.attr("transform", "translate (33 -35) rotate(6)") 
 				.exit()
 				.data([oo,pp]).enter()
 				.append("text")
@@ -280,6 +309,8 @@ path:hover {
 				.text(function(d){
 					return "Grand Junction"
 				})
+				
+				.attr("transform", "translate (25 -10) rotate(6)") 
 
 				
 
@@ -294,7 +325,7 @@ path:hover {
 	</div>
 	<div id="legend">
 
-	<img class="svg-container" src="VoterRegLegends.png"></img>
+	<img class="svg-container" src="VoterRegLegend816.png"></img>
 </div>
 </body>
 </head>
